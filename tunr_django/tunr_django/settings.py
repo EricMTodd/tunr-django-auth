@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = 'artist_list'
 
 
+LOGOUT_REDIRECT_URL = 'artist_list'
+
+
 
 
 # Application definition
