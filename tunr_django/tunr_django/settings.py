@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tunr'
+    'tunr',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'tunr_django.wsgi.application'
+
+
+# Authenticate our rest framework
+REST_FRAMEWORK = {
+    # This allows for read-only access to unathenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        # 'rest_framework.permissions.AllowAny'
+    ]
+}
+
 
 
 # Database
