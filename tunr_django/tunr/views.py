@@ -1,25 +1,26 @@
 from django.shortcuts import render, redirect
-
 from .models import Artist, Song
 from .forms import ArtistForm, SongForm
+from django.contrib.auth.decorators import login_required
 
 
 
 ############################### ARTIST ###############################
 
-
+# This is a decorator, decorators are placed before functions to be called.
+@login_required
 def artist_list(request):
   artists = Artist.objects.all()
   return render(request, 'tunr/artist_list.html', {'artists': artists})
 
 # Artist Show
-
+@login_required
 def artist_detail(request, pk):
   artist = Artist.objects.get(id=pk)
   return render(request, 'tunr/artist_detail.html', {'artist': artist})
 
 # Artist Create
-
+@login_required
 def artist_create(request):
   if request.method == 'POST':
     form = ArtistForm(request.POST)
@@ -31,7 +32,7 @@ def artist_create(request):
   return render(request, 'tunr/artist_form.html', {'form': form})
 
 # Artist Edit
-
+@login_required
 def artist_edit(request, pk):
   artist = Artist.objects.get(pk=pk)
   if request.method == 'POST':
@@ -44,22 +45,25 @@ def artist_edit(request, pk):
   return render(request, 'tunr/artist_form.html', {'form': form})
 
 # Artist Delete
-
+@login_required
 def artist_delete(request, pk):
   Artist.objects.get(id=pk).delete()
   return redirect('artist_list')
 
 ############################### SONG ###############################
 
+@login_required
 def song_list(request):
   songs = Song.objects.all()
   return render(request, 'tunr/song_list.html', {'songs': songs})
 
+@login_required
 def song_detail(request, id):
   song = Song.objects.get(id=id)
   return render(request, 'tunr/song_detail.html', {'song': song})
 
 # Song Create
+@login_required
 def song_create(request):
   if request.method == 'POST':
     form = SongForm(request.POST)
@@ -70,7 +74,8 @@ def song_create(request):
     form = SongForm()
   return render(request, 'tunr/song_form.html', {'form': form})
 
-  # Song Edit
+# Song Edit
+@login_required
 def song_edit(request, id):
   song = Song.objects.get(id=id)
   if request.method == 'POST':
@@ -83,6 +88,7 @@ def song_edit(request, id):
   return render(request, 'tunr/song_form.html', {'form': form})
 
 # Song Delete
+@login_required
 def song_delete(request, id):
   Song.objects.get(id=id).delete()
   return redirect('song_list')
